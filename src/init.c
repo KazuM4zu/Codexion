@@ -10,30 +10,62 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include    "codexion.h"
+#include "codexion.h"
 
-void    init_data(t_data *data, char **argv)
+void	init_data(t_data *data, char **argv)
 {
-    data->number_of_coders = atoi(argv[1]);
-    data->time_to_burnout = atoi(argv[2]);
-    data->time_to_compile = atoi(argv[3]);
-    data->time_to_debug = atoi(argv[4]);
-    data->time_to_refactor = atoi(argv[5]);
-    data->nb_of_compiles_required = atoi(argv[6]);
-    data->dongle_cooldown = atoi(argv[7]);
-    if (strcmp(argv[8], "fifo") == 0)
-        data->scheduler = 0;
-    else if (strcmp(argv[8], "edf") == 0)
-        data->scheduler = 1;
+	data->number_of_coders = atoi(argv[1]);
+	data->time_to_burnout = atoi(argv[2]);
+	data->time_to_compile = atoi(argv[3]);
+	data->time_to_debug = atoi(argv[4]);
+	data->time_to_refactor = atoi(argv[5]);
+	data->nb_of_compiles_required = atoi(argv[6]);
+	data->dongle_cooldown = atoi(argv[7]);
+	if (strcmp(argv[8], "fifo") == 0)
+		data->scheduler = 0;
+	else if (strcmp(argv[8], "edf") == 0)
+		data->scheduler = 1;
 }
 
-
-int init_main(t_data *data, int argc, char **argv)
+int	init_coders_dongers(t_data *data)
 {
-    if (check_global(argc, argv) != 0)
-    {
-        printf("Error\n");
-        return (1);
-    }
-    init_data(data, argv);
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_coders)
+	{
+		data->dongles[i].is_taken = 0;
+		data->dongles[i].ready_at = 0;
+		pthread_mutex_init(&data->dongles[i].mutex, NULL); //Permet d'eviter que deux codeurs utilisent le meme dongles
+		pthread_mutex_init(&data->dongles[i].cond, NULL); //Permettra de creer une file d'attente pour le dongle
+		data->coders[i].id = i + 1;
+		data->coders[i].compiles_done = 0;
+		data->coders[i].data = data;
+		data->coders[i].left_dongle = i;
+		data->coders[i].right_dongle = (i + 1) % data->number_of_coders;
+		i++;
+	}
+	return (0);
+}
+
+int	init_sync(t_data *data)
+{
+	data->coders = malloc(sizeof(t_coder) * data->number_of_coders);
+	data->dongles = malloc(sizeof(t_dongle) * data->number_of_coders);
+	if (!data->coders || !data->dongles)
+		return (1);
+	pthread_mutex_init(&data->log_lock, NULL);
+	pthread_mutex_init(&data->stop_lock, NULL);
+	init_coders_dongers(&data);
+}
+
+int	init_main(t_data *data, int argc, char **argv)
+{
+	if (check_global(argc, argv) != 0)
+	{
+		printf("Error\n");
+		return (1);
+	}
+	init_data(data, argv);
+	return (0);
 }
