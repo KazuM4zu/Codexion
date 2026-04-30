@@ -12,6 +12,15 @@
 
 #include "codexion.h"
 
+static int	is_higher_priority(t_node a, t_node b)
+{
+	if (a.prio_val < b.prio_val)
+		return (1);
+	if (a.prio_val == b.prio_val && a.coder_id < b.coder_id)
+		return (1);
+	return (0);
+}
+
 void	percolate_down(t_heap *heap, int i)
 {
 	int	left;
@@ -23,22 +32,25 @@ void	percolate_down(t_heap *heap, int i)
 		left = 2 * i + 1;
 		right = 2 * i + 2;
 		smallest = i;
-		if (left < heap->size && (heap->nodes[left].prio_val < \
-			heap->nodes[smallest].prio_val || (heap->nodes[left].prio_val == \
-			heap->nodes[smallest].prio_val && heap->nodes[left].coder_id < \
-			heap->nodes[smallest].coder_id)))
+		if (left < heap->size && is_higher_priority(heap->nodes[left], \
+			heap->nodes[smallest]))
 			smallest = left;
-		if (right < heap->size && (heap->nodes[right].prio_val < \
-			heap->nodes[smallest].prio_val || (heap->nodes[right].prio_val == \
-			heap->nodes[smallest].prio_val && heap->nodes[right].coder_id < \
-			heap->nodes[smallest].coder_id)))
+		if (right < heap->size && is_higher_priority(heap->nodes[right], \
+			heap->nodes[smallest]))
 			smallest = right;
-		if (smallest != i)
-		{
-			swap_nodes(&heap->nodes[i], &heap->nodes[smallest]);
-			i = smallest;
-		}
-		else
+		if (smallest == i)
 			break ;
+		swap_nodes(&heap->nodes[i], &heap->nodes[smallest]);
+		i = smallest;
 	}
+}
+
+t_node	heap_pop(t_heap *heap)
+{
+	t_node	root;
+
+	if (heap->size <= 0)
+		return ((t_node){0, 0});
+	root = heap->nodes[0];
+	heap->nodes[0] = heap->nodes[heap->size - 1];
 }

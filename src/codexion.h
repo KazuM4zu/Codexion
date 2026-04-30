@@ -70,6 +70,9 @@ typedef struct s_heap
 	int		capacity;
 }	t_heap;
 
+static int	is_higher_priority(t_node a, t_node b);
+void		percolate_up(t_heap *heap, int i);
+void		percolate_down(t_heap *heap, int i);
 void		init_data(t_data *data, char **argv);
 void		swap_nodes(t_node *a, t_node *b);
 int			init_heap(t_heap *heap, t_data *data);
@@ -80,5 +83,6 @@ long long	get_time_in_ms(void);
 int			print_state(t_coder *coder, char *msg);
 int			ft_isnumber(char *s);
 int			check_global(int argc, char **argv);
+t_node		heap_pop(t_heap *heap);
 
 #endif
