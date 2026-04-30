@@ -21,7 +21,10 @@ void    init_data(t_data *data, char **argv)
     data->time_to_refactor = atoi(argv[5]);
     data->nb_of_compiles_required = atoi(argv[6]);
     data->dongle_cooldown = atoi(argv[7]);
-    data->scheduler = atoi(argv[8]);
+    if (strcmp(argv[8], "fifo") == 0)
+        data->scheduler = 0;
+    else if (strcmp(argv[8], "edf") == 0)
+        data->scheduler = 1;
 }
 
 

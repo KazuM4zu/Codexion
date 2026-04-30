@@ -14,5 +14,10 @@
 
 int main(int argc, char **argv)
 {
-	t_data	data;
+	t_data  data;
+    int i;
+
+    if (init_main(&data, argc, argv) != 0)
+        return (1);
+
 }
