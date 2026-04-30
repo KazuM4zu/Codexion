@@ -37,12 +37,13 @@ int	init_coders_dongers(t_data *data)
 		data->dongles[i].is_taken = 0;
 		data->dongles[i].ready_at = 0;
 		pthread_mutex_init(&data->dongles[i].mutex, NULL); //Permet d'eviter que deux codeurs utilisent le meme dongles
-		pthread_mutex_init(&data->dongles[i].cond, NULL); //Permettra de creer une file d'attente pour le dongle
+		pthread_cond_init(&data->dongles[i].cond, NULL); //Permettra de creer une file d'attente pour le dongle
 		data->coders[i].id = i + 1;
 		data->coders[i].compiles_done = 0;
 		data->coders[i].data = data;
 		data->coders[i].left_dongle = i;
 		data->coders[i].right_dongle = (i + 1) % data->number_of_coders;
+		init_heap(&(data->dongles[i].wait_queue), &data);
 		i++;
 	}
 	return (0);

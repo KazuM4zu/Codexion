@@ -36,7 +36,7 @@ typedef struct s_dongle
 	pthread_cond_t	cond; // Pour mettre les codeurs en attente
 	int				is_taken; // État actuel
 	long long		ready_at; // Timestamp pour le cooldown
-	// Ton Heap (file de priorité) ira ici pour l'arbitrage
+	t_heap			wait_queue;
 }	t_dongle;
 
 typedef struct s_data
@@ -60,7 +60,7 @@ typedef struct s_data
 typedef struct s_node
 {
 	int			coder_id;
-	long long	priority_value;
+	long long	prio_val;
 }	t_node;
 
 typedef struct s_heap
@@ -70,9 +70,15 @@ typedef struct s_heap
 	int		capacity;
 }	t_heap;
 
-void    init_data(t_data *data, char **argv);
-int init_main(t_data *data, int argc, char **argv);
-int ft_isnumber(char *s);
-int check_global(int argc, char **argv);
+void		init_data(t_data *data, char **argv);
+void		swap_nodes(t_node *a, t_node *b);
+int			init_heap(t_heap *heap, t_data *data);
+int			init_coders_dongers(t_data *data);
+int			init_sync(t_data *data);
+int			init_main(t_data *data, int argc, char **argv);
+long long	get_time_in_ms(void);
+int			print_state(t_coder *coder, char *msg);
+int			ft_isnumber(char *s);
+int			check_global(int argc, char **argv);
 
 #endif
