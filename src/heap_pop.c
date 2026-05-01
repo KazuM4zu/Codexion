@@ -6,7 +6,7 @@
 /*   By: efoyer <efoyer@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 12:35:03 by efoyer            #+#    #+#             */
-/*   Updated: 2026/04/30 12:35:05 by efoyer           ###   ########.fr       */
+/*   Updated: 2026/05/01 18:50:45 by efoyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,8 @@ t_node	heap_pop(t_heap *heap)
 		return ((t_node){0, 0});
 	root = heap->nodes[0];
 	heap->nodes[0] = heap->nodes[heap->size - 1];
+	heap->size--;
+	if (heap->size > 0)
+		percolate_down(heap, 0);
+	return (root);
 }

@@ -6,7 +6,7 @@
 /*   By: efoyer <efoyer@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 11:11:44 by efoyer            #+#    #+#             */
-/*   Updated: 2026/04/30 11:11:50 by efoyer           ###   ########.fr       */
+/*   Updated: 2026/05/01 20:12:49 by efoyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	print_state(t_coder *coder, char *msg)
 	long long	timestamp;
 
 	pthread_mutex_lock(&coder->data->stop_lock);
-	if (coder->data->stop_sim)
+	if (coder->data->stop_sim && strcmp(msg, "burned out") != 0)
 	{
 		pthread_mutex_unlock(&coder->data->stop_lock);
 		return (1);
@@ -36,4 +36,5 @@ int	print_state(t_coder *coder, char *msg)
 	pthread_mutex_lock(&coder->data->log_lock);
 	printf("%lld %d %s\n", timestamp, coder->id, msg);
 	pthread_mutex_unlock(&coder->data->log_lock);
+    return (0);
 }

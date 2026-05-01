@@ -6,7 +6,7 @@
 /*   By: efoyer <efoyer@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 11:35:17 by efoyer            #+#    #+#             */
-/*   Updated: 2026/04/30 11:35:20 by efoyer           ###   ########.fr       */
+/*   Updated: 2026/05/01 19:46:42 by efoyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ void	heap_push(t_heap *heap, int coder_id, long long priority)
 	i = heap->size;
 	heap->nodes[i] = new_node;
 	heap->size++;
-	percolate_up(&heap, i);
+	percolate_up(heap, i);
 }

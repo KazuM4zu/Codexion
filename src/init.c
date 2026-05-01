@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efoyer <efoyer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: efoyer <efoyer@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 11:54:01 by efoyer            #+#    #+#             */
-/*   Updated: 2026/04/29 13:37:37 by efoyer           ###   ########.fr       */
+/*   Updated: 2026/05/01 19:53:16 by efoyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	init_coders_dongers(t_data *data)
 		data->coders[i].data = data;
 		data->coders[i].left_dongle = i;
 		data->coders[i].right_dongle = (i + 1) % data->number_of_coders;
-		init_heap(&(data->dongles[i].wait_queue), &data);
+        data->coders[i].last_compile_start = get_time_in_ms();
+        init_heap(&(data->dongles[i].wait_queue), data);
 		i++;
 	}
 	return (0);
@@ -57,7 +58,8 @@ int	init_sync(t_data *data)
 		return (1);
 	pthread_mutex_init(&data->log_lock, NULL);
 	pthread_mutex_init(&data->stop_lock, NULL);
-	init_coders_dongers(&data);
+	init_coders_dongers(data);
+    return (0);
 }
 
 int	init_main(t_data *data, int argc, char **argv)

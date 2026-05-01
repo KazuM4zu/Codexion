@@ -6,7 +6,7 @@
 /*   By: efoyer <efoyer@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 12:27:48 by efoyer            #+#    #+#             */
-/*   Updated: 2026/04/30 12:27:53 by efoyer           ###   ########.fr       */
+/*   Updated: 2026/05/01 19:15:23 by efoyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ long long	calculate_priority(t_coder *coder)
 		priority = coder->last_compile_start + data->time_to_burnout;
 	pthread_mutex_unlock(&data->stop_lock);
 	return (priority);
+}
+
+int check_stop(t_data *data)
+{
+	int stop;
+
+	pthread_mutex_lock(&data->stop_lock);
+	stop = data->stop_sim;
+	pthread_mutex_unlock(&data->stop_lock);
+	return (stop);
 }
