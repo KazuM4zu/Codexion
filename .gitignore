@@ -1,3 +1,4 @@
 *.pdf
 obj/
 codexion
+.vscode/
