@@ -26,8 +26,8 @@ void	release_dongle(t_coder *coder, int d_id)
 
 void acquire_dongle(t_coder *coder, int d_id)
 {
-	t_dongle *d;
-	long long wait_time;
+    long long wait_time;
+    t_dongle *d;
 
 	d = &coder->data->dongles[d_id];
 	pthread_mutex_lock(&d->mutex);

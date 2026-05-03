@@ -6,7 +6,7 @@
 /*   By: efoyer <efoyer@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 11:45:28 by efoyer            #+#    #+#             */
-/*   Updated: 2026/05/01 20:05:06 by efoyer           ###   ########.fr       */
+/*   Updated: 2026/05/03 21:08:05 by efoyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ typedef struct s_heap
 
 typedef struct s_dongle
 {
-    pthread_mutex_t mutex; // Protège l'accès au dongle
-    pthread_cond_t cond;   // Pour mettre les codeurs en attente
-    int is_taken;          // État actuel
-    long long ready_at;    // Timestamp pour le cooldown
+    pthread_mutex_t mutex;
+    pthread_cond_t cond;
+    int is_taken;
+    long long ready_at;
     t_heap wait_queue;
 } t_dongle;
 

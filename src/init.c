@@ -6,7 +6,7 @@
 /*   By: efoyer <efoyer@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 11:54:01 by efoyer            #+#    #+#             */
-/*   Updated: 2026/05/01 19:53:16 by efoyer           ###   ########.fr       */
+/*   Updated: 2026/05/03 21:08:22 by efoyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	init_coders_dongers(t_data *data)
 	{
 		data->dongles[i].is_taken = 0;
 		data->dongles[i].ready_at = 0;
-		pthread_mutex_init(&data->dongles[i].mutex, NULL); //Permet d'eviter que deux codeurs utilisent le meme dongles
-		pthread_cond_init(&data->dongles[i].cond, NULL); //Permettra de creer une file d'attente pour le dongle
+		pthread_mutex_init(&data->dongles[i].mutex, NULL);
+		pthread_cond_init(&data->dongles[i].cond, NULL);
 		data->coders[i].id = i + 1;
 		data->coders[i].compiles_done = 0;
 		data->coders[i].data = data;

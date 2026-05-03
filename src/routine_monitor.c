@@ -51,7 +51,7 @@ static int check_all_full(t_data *data)
 		pthread_mutex_unlock(&data->stop_lock);
 		i++;
 	}
-	return (finished == data->number_of_coders); // Retourne 1 si tout le monde a fini
+	return (finished == data->number_of_coders);
 }
 
 void *monitor_routine(void *arg)
